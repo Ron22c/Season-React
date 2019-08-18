@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import SeasonDisplay from './SeasonDisplay'
+import Spinner from './Spinner'
+import IntervalSet from './TimeComp'
 class App extends React.Component{
     constructor(props){
         super(props)
@@ -27,10 +29,11 @@ class App extends React.Component{
     componentWillUnmount(){
         console.log('componentWillUnmount')
     }
-    render(){
-        console.log('render')
+    helperRender(){
         if(!this.state.error && !this.state.lat){
-            return <h1>Loading...</h1>
+            return (
+                <Spinner>Please Allow Your Location Permission</Spinner>
+            )
         }
         if (!this.state.error){
             return(
@@ -39,6 +42,14 @@ class App extends React.Component{
                 </div>
         )}
         return <p>Error: {this.state.error}</p>
+    }
+    render(){
+        return (
+            <div className="boeder" style={{border:'5px black solid'}}>
+                {this.helperRender()}
+                <IntervalSet/>
+            </div>
+        )
     }
 }
 ReactDOM.render(
